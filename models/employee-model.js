@@ -55,15 +55,41 @@ module.exports= {
 		});
 	},
 
+	addproduct: function (user, callback) {
+		console.log();
+		var sql = "insert into product values(?,?,?,?,?,?)";
+		db.execute(sql, [user.id, user.name, user.description, user.price, user.category, user.stockalert], function (status) {
+			if (status) {
+				console.log(user);
+				callback(true);
+			} else {
+				callback(false);
+			}
+		});
+	},
 
-
-
-	getAll: function(callback){
-		var sql = "select * from employee";
+	getallproduct: function(callback){
+		var sql = "select * from product";
 		db.getResults(sql, null, function(results){
 			callback(results);
 		});
 	},
+
+
+	getAll: function(callback){
+		var sql = "select * from employee";
+		db.getResults(sql, [], function (results) {
+			if (results.length > 0) {
+				callback(results);
+			} else {
+				callback([]);
+			}
+		});
+	},
+
+
+
+
 	insert: function(user, callback){
 
 	},

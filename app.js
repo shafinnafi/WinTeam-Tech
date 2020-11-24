@@ -4,6 +4,10 @@ const login = require('./controllers/login');
 const logout = require('./controllers/logout');
 const signup = require('./controllers/signup');
 const employee = require('./controllers/employee/employee')
+const mysql      = require('mysql');
+const path = require('path');
+const fileUpload = require('express-fileupload');
+
 
 
 // var ejs = require('ejs');
@@ -30,6 +34,12 @@ app.use('/login', login);
 app.use('/signup', signup);
 app.use('/employee', employee)
 app.use('/logout', logout)
+
+
+app.set('views', __dirname + '/views');
+app.use(express.static(path.join(__dirname, 'assets')));
+app.use(fileUpload());
+ 
 
 
 //routes
