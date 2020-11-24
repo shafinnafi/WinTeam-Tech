@@ -22,16 +22,16 @@ module.exports= {
 			}
 		});
 	},
-	// updateProfile: function (user, callback) {
-	// 	var sql = "update employee set  name=? ,email=?, phone=?  where username=? ";
-	// 	db.execute(sql, [ user.name, user.email, user.phone,  user.username  ], function (status) {
-	// 		if (status) {
-	// 			callback(true);
-	// 		} else {
-	// 			callback(false);
-	// 		}
-	// 	});
-	// },
+	updateProfile: function (user, callback) {
+		var sql = "update employee set  name=? ,email=?, phone=?  where username=? ";
+		db.execute(sql, [ user.name, user.email, user.phone,  user.username  ], function (status) {
+			if (status) {
+				callback(true);
+			} else {
+				callback(false);
+			}
+		});
+	},
 
 	updatePassword: function (user, callback) {
 		var sql = "update employee set password=?  where username=? ";
@@ -78,6 +78,40 @@ module.exports= {
 
 	getAll: function(callback){
 		var sql = "select * from employee";
+		db.getResults(sql, [], function (results) {
+			if (results.length > 0) {
+				callback(results);
+			} else {
+				callback([]);
+			}
+		});
+	},
+
+	deleteproduct: function(user, callback){
+		var sql = "delete from product where id='"+user.id+"'; ";
+
+		db.execute(sql, function(status){
+			if(status){
+				callback(true);
+			}else{
+				callback(false);
+			}
+		});
+	},
+
+	deleteInvoice : function(id, callback){
+		var sql = "delete from invoice where invoice_id='"+id+"'; ";
+		db.execute(sql, function(status){
+			if(status){
+				callback(true);
+			}else{
+				callback(false);
+			}
+		});
+	},
+
+	getemployee: function (callback) {
+		var sql = "select * from customer";
 		db.getResults(sql, [], function (results) {
 			if (results.length > 0) {
 				callback(results);

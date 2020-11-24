@@ -38,6 +38,18 @@ router.get('/', function (req, res) {
 });
 
 
+router.get('/index', function (req, res) {
+	
+	res.render('employee/index', {name: name1});
+	
+
+	
+});
+
+
+
+
+
 router.get('/profile', function (req, res) {
 	employeemodel.getByUname(req.cookies['uname'],function (result){
 		res.render('employee/profile', {
@@ -57,7 +69,7 @@ router.post('/profile', function (req, res) {
 
 	employeemodel.updateProfile(user, function (status) {
 		if (status) {
-			res.redirect('/employee/profile');
+			res.render('employee/profileupdated');
 		} else {
 			res.redirect('/logout');
 		}
@@ -117,7 +129,23 @@ router.get('/product', function (req, res) {
 router.post('/product', function (req, res) {
 	// res.render('employee/addproduct', {name: name1});
 
+	var user = {
+		id: req.body.product_id,
+		name: req.body.product_name,
+		description: req.body.product_description,
+		price: req.body.price,
+		category: req.body.product_category,
+		stockalert: req.body.stock_alert
 
+	}
+	employeemodel.addproduct(user, function (status) {
+			if (status) {
+			res.render('employee/added');
+
+			} else {
+			res.redirect('/employee/product');
+			}
+			});
 // 	if (!req.files){
 	
 // 	var user = {
@@ -157,23 +185,7 @@ router.post('/product', function (req, res) {
 // 	}
 
 		
-var user = {
-			id: req.body.product_id,
-			name: req.body.product_name,
-			description: req.body.product_description,
-			price: req.body.price,
-			category: req.body.product_category,
-			stockalert: req.body.stock_alert
 
-		}
-		employeemodel.addproduct(user, function (status) {
-				if (status) {
-				res.send('submitted');
-
-				} else {
-				res.redirect('/employee/product');
-				}
-				});
 
 
 });
@@ -187,16 +199,75 @@ router.get('/productlist', function (req, res) {
 			});
 		} else {
 			res.render('employee/index', {
-				userlist: results
+				productlist: results
 			});
 		}
 	});
+});
+
+	
+
+
+	// router.get('/profile/changepassword', function (req, res) {
+	// 	employeemodel.getByUname(req.cookies['uname'],function (result){
+	// 		res.render('employee/changepassword', {
+	// 			user: result
+	// 		});
+	// 	});
+	// });
+
+
+	router.get('/deleteproduct/:id', function (req, res) {
+		var user = {id: req.params.id};
+		employeemodel.deleteproduct(user,function (results) {
+			if (results.length > 0) {
+				res.redirect('/employee/deleted')
+			} else {
+				res.render('employee/viewproduct')
+			}
+		});
+
+
+		// router.get('/deleteproduct/:id', function (req, res) {
+		// 	var user = {id: req.params.id};
+		// 	employeemodel.getallproduct(function (results) {
+		// 		if (results.length > 0) {
+		// 			res.render('employee/viewproduct', {
+		// 				productlist: results
+		// 			});
+		// 		} else {
+		// 			res.render('employee/index', {
+		// 				productlist: results
+		// 			});
+		// 		}
+		// 	});
+
+
 	
 });
 
 
+router.get('/deleted', function (req, res) {
+	
+	res.render('/employee/deleted');
+
+});
 
 
+router.get('/viewcustomer', function (req, res) {
+	employeemodel.getemployee(function (results) {
+		if (results.length > 0) {
+			res.render('employee/viewcustomer', {
+				userlist: results
+			});
+		} else {
+			res.render('employee/index', {
+				userlist: results
+			});
+		}
+	});
+
+});
 
 
 

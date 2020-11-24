@@ -10,38 +10,46 @@
 
 <body>
 	<div>
-		<h2>Customers</h2>
+		<h2>Products</h2>
 	</div>
 
 	
-	<!-- <a href="/logout">Logout</a><br><br> -->
+	<a href="/logout">Logout</a><br><br> 
 	
+<form method="post">
+        <table border="1">
+            <tr>
+                <td>Id</td>
+                <td> Name</td>
+                <td>Description</td>
+                <td>Price</td>
+                <td>Category</td>
+                <td>Stock</td>
+                <td>Delete</td>
+            </tr>
+            <% for(var i=0; i < productlist.length; i++){ %>
+            <tr>
+                <td><%= productlist[i].id %></td>
+                <td><%= productlist[i].name %></td>
+                <td><%= productlist[i].description %></td>
+                <td><%= productlist[i].price %></td>
+                <td><%= productlist[i].category %></td>
+                <td><%= productlist[i].stock %></td>
+                
 
-	<table border="1">
-		<tr>
-			<td>Id</td>
-			<td> Name</td>
-			<td>Description</td>
-			<td>Price</td>
-			<td>Category</td>
-			<td>Stock</td>
-			<td>No of report</td>
-			<td>status</td>
-		</tr>
-		<% for(var i=0; i < productlist.length; i++){ %>
-		<tr>
-			<td><%= productlist[i].id %></td>
-			<td><%= productlist[i].name %></td>
-			<td><%= productlist[i].description %></td>
-			<td><%= productlist[i].price %></td>
-			<td><%= productlist[i].category %></td>
-			<td><%= productlist[i].stock %></td>
-			<!-- <td>
-				<a href="/admin/view_Customers/<%=  %>">View Profile </a>
-			</td> --> 
-		</tr>
-		<%  } %>
-	</table>
+                <td>
+            
+                    <a href="editproduct/<%= productlist[i].id %>">Edit</a> |
+                    <a href="deleteproduct/<%=productlist[i].id %>">Delete</a>
+                </td>
+                <!-- <td>
+                    <a href="/admin/view_Customers/<%=  %>">View Profile </a>
+                </td> --> 
+            </tr>
+            <%  } %>
+        </table>
+</form>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
